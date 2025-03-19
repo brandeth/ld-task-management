@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Task } from '@/types';
-import { Head, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { toast } from 'sonner';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -27,6 +27,12 @@ export default function Index({ tasks }: { tasks: Task[] }) {
       <Head title="Tasks" />
 
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+        <div>
+          <Link className={buttonVariants({ variant: 'outline' })} href="/tasks/create">
+            Create Task
+          </Link>
+        </div>
+
         <Table className={'mt-4'}>
           <TableHeader>
             <TableRow>
