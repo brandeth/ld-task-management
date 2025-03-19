@@ -1,7 +1,8 @@
+import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Task } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -11,6 +12,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ tasks }: { tasks: Task[] }) {
+  const deleteTask = (id: number) => {
+    if (confirm('Are you sure you want to delete this task?')) {
+      router.delete(route('tasks.destroy', id));
+    }
+  };
+
+  const handleDeleteTask = (id: number) => () => deleteTask(id);
+
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Tasks" />
@@ -32,7 +41,11 @@ export default function Index({ tasks }: { tasks: Task[] }) {
                 <TableCell className={task.is_completed ? 'text-green-600' : 'text-red-700'}>
                   {task.is_completed ? 'Completed' : 'In Progress'}
                 </TableCell>
-                <TableCell>Action Button</TableCell>
+                <TableCell className="flex flex-row gap-x-2 text-right">
+                  <Button variant="destructive" className="cursor-pointer" onClick={handleDeleteTask(task.id)}>
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
