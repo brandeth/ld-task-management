@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type Task } from '@/types';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -10,7 +10,7 @@ const breadcrumbs: BreadcrumbItem[] = [
   },
 ];
 
-export default function Index() {
+export default function Index({ tasks }: { tasks: Task[] }) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Tasks" />
@@ -26,16 +26,15 @@ export default function Index() {
           </TableHeader>
 
           <TableBody>
-            <TableRow key={1}>
-              <TableCell>Meal Prep</TableCell>
-              <TableCell>Completed</TableCell>
-              <TableCell>Action Button</TableCell>
-            </TableRow>
-            <TableRow key={2}>
-              <TableCell>City Promo Board</TableCell>
-              <TableCell>In Progress</TableCell>
-              <TableCell>Action Button</TableCell>
-            </TableRow>
+            {tasks.map((task: Task) => (
+              <TableRow key={task.id}>
+                <TableCell>{task.name}</TableCell>
+                <TableCell className={task.is_completed ? 'text-green-600' : 'text-red-700'}>
+                  {task.is_completed ? 'Completed' : 'In Progress'}
+                </TableCell>
+                <TableCell>Action Button</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>
