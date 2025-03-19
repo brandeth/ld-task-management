@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Task } from '@/types';
 import { Head, router } from '@inertiajs/react';
+import { toast } from 'sonner';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -15,6 +16,7 @@ export default function Index({ tasks }: { tasks: Task[] }) {
   const deleteTask = (id: number) => {
     if (confirm('Are you sure you want to delete this task?')) {
       router.delete(route('tasks.destroy', id));
+      toast.success('Task deleted successfully.');
     }
   };
 
